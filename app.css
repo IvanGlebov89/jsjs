@@ -107,6 +107,7 @@ body {
   transition: opacity 0.4s, visibility 0.4s;
 }
 .modal__box {
+  position: relative;
   max-width: 400px;
   padding: 45px;
   z-index: 1;
@@ -116,6 +117,21 @@ body {
   box-shadow: 14px 14px 5px -5px rgba(0, 0, 0, 0.75);
   transform: scale(0);
   transition: transform 0.8s;
+}
+.my__modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background-color: transparent;
+  padding: 10px;
+  cursor: pointer;
+}
+.my__modal-close svg path {
+  transition: 4s;
+}
+.my__modal-close:hover svg path {
+  fill: rgb(11, 135, 197);
 }
 .modal.open {
   visibility: visible;

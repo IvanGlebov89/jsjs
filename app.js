@@ -24,14 +24,17 @@ const modalOpen = document.querySelector(".modal");
 const modalBox = document.querySelector(".modal__box");
 const productBtn = document.querySelectorAll(".product-card__add-to-cart");
 const productCard = document.querySelectorAll(".product-card");
+
 const url = window.location.href;
 // console.log(url);
 function openModal() {
   modalOpen.classList.add("open");
 }
-function clearModal(elem) {
-  elem.classList.add("hide");
-}
+const modalBtn = document
+  .querySelector(".my__modal-close")
+  .addEventListener("click", function () {
+    modalOpen.classList.remove("open");
+  });
 productBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let data = e.target.dataset.modelOpen;
