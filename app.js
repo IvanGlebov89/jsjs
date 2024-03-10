@@ -26,15 +26,17 @@ const productBtn = document.querySelectorAll(".product-card__add-to-cart");
 const productCard = document.querySelectorAll(".product-card");
 
 const url = window.location.href;
-// console.log(url);
+// открытия модельного окна
 function openModal() {
   modalOpen.classList.add("open");
 }
+// закрытие модельного окна
 const modalBtn = document
   .querySelector(".my__modal-close")
   .addEventListener("click", function () {
     modalOpen.classList.remove("open");
   });
+//Выполнять ajax-запрос на текущую страницу.
 productBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let data = e.target.dataset.modelOpen;
@@ -58,15 +60,6 @@ productBtn.forEach((btn) => {
       .catch((error) => {
         console.log("error", error);
       });
-
-    // productCard.forEach((modal) => {
-    //   if (modal.dataset.modal == data) {
-    //     openModal(modal);
-    //     console.log(modal);
-    //   } else {
-    //     clearModal(modal);
-    //   }
-    // });
   });
 });
 function newModal() {}
