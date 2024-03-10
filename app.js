@@ -20,25 +20,14 @@ if (counters) {
     });
   });
 }
-const catalogProduct = document.querySelector(".catalog");
+const modalOpen = document.querySelector(".modal");
+const modalBox = document.querySelector(".modal__box");
 const productBtn = document.querySelectorAll(".product-card__add-to-cart");
 const productCard = document.querySelectorAll(".product-card");
 const url = window.location.href;
-console.log(url);
-const ajax = fetch(url);
-ajax
-  .then((response) => {
-    return response.json;
-  })
-  .then((card) => {
-    console.log("card", card);
-  })
-  .catch((error) => {
-    console.log("error", error);
-  });
-
-function openModal(elem) {
-  elem.classList.add("_active");
+// console.log(url);
+function openModal() {
+  modalOpen.classList.add("open");
 }
 function clearModal(elem) {
   elem.classList.add("hide");
@@ -46,20 +35,35 @@ function clearModal(elem) {
 productBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let data = e.target.dataset.modelOpen;
-    productCard.forEach((modal) => {
-      if (modal.dataset.modal == data) {
-        openModal(modal);
-        console.log(modal);
-      } else {
-        clearModal(modal);
-      }
-    });
+    let idActiveModal = "";
+    const ajax = fetch(`${url}?id=${data}`);
+    ajax
+      .then((response) => {
+        console.log(response);
+        const searchParams = new URL(response.url).searchParams;
+        const id = searchParams.get("id");
+        idActiveModal = id;
+        return response.text();
+      })
+      .then((html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const activeModal = doc.querySelector(`[data-modal=${idActiveModal}]`);
+        modalBox.appendChild(activeModal);
+        openModal();
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+
+    // productCard.forEach((modal) => {
+    //   if (modal.dataset.modal == data) {
+    //     openModal(modal);
+    //     console.log(modal);
+    //   } else {
+    //     clearModal(modal);
+    //   }
+    // });
   });
 });
-function catalogPush(elem, replace) {
-  const catalog = document.createElement("div");
-  catalog.className = "catalog";
-
-  catalog.push(elem);
-  replace.replaceWith(catalog);
-}
+function newModal() {}
