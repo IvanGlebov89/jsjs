@@ -34,17 +34,14 @@ const url = window.location.href;
 // открытия модельного окна
 function openModal() {
   modalOpen.classList.add("open");
-  const contents = document.querySelectorAll("[data-content]");
-  if (contents) {
-    contents.forEach((content) => {
-      content.addEventListener("click", (e) => {
-        const { target } = e;
-        target.closest(".product-card__description")
-          ? (hidden = false)
-          : (hidden = true);
-      });
-    });
-  }
+  // const contents = document.querySelectorAll("[data-content]");
+  // if (contents) {
+  //   contents.forEach((content) => {
+  //     content.addEventListener("click", () => {
+  //       content.children.item("p").hidden = false;
+  //     });
+  //   });
+  // }
 }
 // закрытие модельного окна
 
@@ -71,6 +68,10 @@ productBtn.forEach((btn) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
         const activeModal = doc.querySelector(`[data-modal=${idActiveModal}]`);
+        const modalDescription = doc.querySelector(
+          `[data-modal=${idActiveModal}] [data-content] .product-card__description`
+        );
+        modalDescription.hidden = false;
         content.appendChild(activeModal);
         openModal();
       })
@@ -79,5 +80,3 @@ productBtn.forEach((btn) => {
       });
   });
 });
-
-console.log(newModalBox);
