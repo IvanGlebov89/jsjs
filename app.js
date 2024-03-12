@@ -20,6 +20,11 @@ if (counters) {
     });
   });
 }
+const productContentText = document.querySelectorAll(
+  ".product-card__description"
+);
+const content = document.querySelector(".content");
+const buttonClose = document.getElementById("close-modal");
 const modalOpen = document.querySelector(".modal");
 const modalBox = document.querySelector(".modal__box");
 const productBtn = document.querySelectorAll(".product-card__add-to-cart");
@@ -29,12 +34,25 @@ const url = window.location.href;
 // открытия модельного окна
 function openModal() {
   modalOpen.classList.add("open");
+  const contents = document.querySelectorAll("[data-content]");
+  if (contents) {
+    contents.forEach((content) => {
+      content.addEventListener("click", (e) => {
+        const { target } = e;
+        target.closest(".product-card__description")
+          ? (hidden = false)
+          : (hidden = true);
+      });
+    });
+  }
 }
 // закрытие модельного окна
+
 const modalBtn = document
   .querySelector(".my__modal-close")
   .addEventListener("click", function () {
     modalOpen.classList.remove("open");
+    content.innerHTML = "";
   });
 //Выполнять ajax-запрос на текущую страницу.
 productBtn.forEach((btn) => {
@@ -44,7 +62,6 @@ productBtn.forEach((btn) => {
     const ajax = fetch(`${url}?id=${data}`);
     ajax
       .then((response) => {
-        console.log(response);
         const searchParams = new URL(response.url).searchParams;
         const id = searchParams.get("id");
         idActiveModal = id;
@@ -54,7 +71,7 @@ productBtn.forEach((btn) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
         const activeModal = doc.querySelector(`[data-modal=${idActiveModal}]`);
-        modalBox.appendChild(activeModal);
+        content.appendChild(activeModal);
         openModal();
       })
       .catch((error) => {
@@ -62,4 +79,5 @@ productBtn.forEach((btn) => {
       });
   });
 });
-function newModal() {}
+
+console.log(newModalBox);

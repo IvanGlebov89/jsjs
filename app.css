@@ -140,3 +140,7 @@ body {
 .modal.open .modal__box {
   transform: scale(1);
 }
+
+.hidden {
+  visibility: hidden;
+}
